@@ -1,0 +1,1467 @@
+// folder MODELS:
+// Users.js:
+// const mongoose = require("mongoose");
+// const passportLocalMangoose = require("passport-local-mongoose");
+
+// const userSchema = new mongoose.Schema({
+//     userName: {
+//         type: String,
+//         trim: true
+//     },
+
+//     gender: {
+//         type: String,
+//         enum: ['Male', 'Female'],
+//     },
+
+//     address: {
+//         type: String,
+//         trim: true
+//     },
+
+//     phone: {
+//         type: String,
+//         trim: true
+//     },
+//     company: {
+//         type: String,
+//         trim: true
+//     },
+
+//     email: {
+//         type: String,
+//         lowercase: true,
+//         trim: true
+//     }
+
+// });
+
+// userSchema.plugin(passportLocalMongoose, {
+//   usernameField: "email",
+// });
+// module.exports = mongoose.model("Users", userSchema);
+
+
+// Message.js:
+
+// const mongoose = require("mongoose");
+
+// const messageSchema = new mongoose.Schema({
+//     name: String,
+//     gender: String,
+//     address: String,
+//     phone: String,
+//     company: String,
+//     email: String
+// });
+
+// module.exports = mongoose.model("Message", messageSchema);
+
+
+// folder ROUTES:
+// aboutRoutes.js:
+// const express = require('express');
+// const router = express.Router();
+
+// router.get('/aboutePage', (req, res) => {
+//     res.render('about')
+// });
+// module.exports = router;
+
+// contactRoutes.js:
+// const express = require('express');
+// const router = express.Router();
+
+// router.get('/contactPage', (req, res) => {
+//     res.render('contact')
+// });
+// module.exports = router;
+
+// formRoutes.js:
+// const express = require('express');
+// const router = express.Router();
+
+// router.get('/formPage', (req, res) => {
+//     res.render('form')
+// });
+// module.exports = router;
+
+// indexRoutes.js:
+// const express = require('express');
+// const router = express.Router();
+
+// router.get('/', (req, res) => {
+//     res.render('index')
+// });
+// module.exports = router;
+// etc
+
+// index.js:
+// // DEPENDENCIES
+// const express = require ('express');
+// const path = require('path');
+// const mongoose = require('mongoose');
+// const passport = require('passport');
+// const moment = require('moment');
+// const expressSession = require('express-session')({
+//     secret: 'mulis',
+//     resave: false,
+//     saveUninitialized: false
+// });
+
+// require('dotenv').config();
+
+// //IMPORT USERMODEL
+// const User = require('./models/User');
+
+// //IMPORT ROUTE
+// const indexRoutes = require('./routes/indexRoutes');
+// const contactRoutes = require('./routes/contactRoutes');
+// const formRoutes = require('./routes/formRoutes');
+// const aboutRoutes = require('./routes/aboutRoutes');
+
+
+// //INSTANTIATIONS
+// const app = express();
+// const port = 3012;
+
+
+// //CONFIGURATIONS
+// app.locals.moment = moment;
+// mongoose.connect(process.env.DATABASE);
+// mongoose.connection
+//   .once('open', () => {
+//     console.log('Mongoose Connection Open!')
+//   })
+//   .on('error', (error) => {
+//     console.error(`Connection Error: ${error.message}
+//     `);
+//   });
+
+//   app.set('view engine', 'pug')
+//   app.set('views', path.join(__dirname, 'views'));
+
+//   //MIDDLEWARE
+//   // app.use('/about', (req, res, next) => {
+//   //   console.log('A newrequest recieved at ' + Date.now());
+//   //   next();
+//   // });
+
+//   app.use(express.urlencoded({extended: false}));
+//   //app.use(express.json()); 
+//   app.use(express.static(path.join(__dirname, 'public')));
+
+// //Express Session Configs
+// app.use(expressSession);
+// app.use(passport.initialize());
+// app.use(passport.session());//
+
+// //Passport Configs
+// passport.use(User.createStrategy());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+// //USE IMPORTED ROUTESpassport.deserializeUser(User.deserializeUser());
+// app.use('/', indexRoutes);
+// app.use('/about', aboutRoutes);
+// app.use('/contact', contactRoutes);
+// app.use('/form', formRoutes);
+
+// //For Non-Existing Routes
+// app.use((req, res) => {
+//     res.status(404).send('Oops! Route not found!');
+// });
+
+// app.listen(port, () => console.log(`listening on port ${port}`));
+
+
+// server.js:
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const Message = require("./models/Message");
+
+// const app = express();
+
+// // middleware
+// app.use(express.json());
+
+// // MongoDB connection
+// mongoose.connect("mongodb://127.0.0.1:27017/mydatabase")
+// .then(() => {
+//   console.log("MongoDB connected successfully");
+// })
+// .catch((error) => {
+//   console.log("MongoDB connection error:", error);
+// });
+
+// // route to save message
+// app.post("/message", async (req, res) => {
+//   try {
+//     const newMessage = new Message(req.body);
+//     await newMessage.save();
+//     res.send("Message saved successfully");
+//   } catch (error) {
+//     res.status(500).send("Error saving message");
+//   }
+// });
+
+// // start server
+// app.listen(3000, () => {
+//   console.log("Server running on port 3003");
+// });
+
+
+// folder VIEWS:
+
+// about.pug:
+// doctype html
+// head
+//   meta(charset='UTF-8')
+//   meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//   title Pheebz-Portfolio
+//   link(href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap' rel='stylesheet')
+//   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css')
+//   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet')
+//   link(rel='stylesheet' href='public/css/style.css')
+// nav.navbar
+//   a.navbar-brand(href='#') My Portfolio
+//   ul.nav-links
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+// section#about.about-banner
+//   div
+//     h2.about-banner-title
+//       | About
+//       br
+//       | Me.
+//   .about-banner-body
+//     p
+//       | Hi, I&apos;m Phoebe &mdash; a developer, artist, and lifelong learner based in Kampala, Uganda.
+//       | I hold a Bachelor of Science in Counseling Psychology and I am currently pursuing
+//       | a Postgraduate Diploma in Information Technology at Uganda Management Institute,
+//       | deepening my knowledge in computing systems, networking, databases, and ICT management.
+//     p
+//       | I trained at Refactory Academy where I studied the foundations of software development,
+//       | covering HTML, CSS, JavaScript, GitHub, GitLab, and object-oriented development.
+//       | I have since built websites, web applications, and e-commerce platforms using
+//       | WordPress, Webflow, WooCommerce, Elementor, Pantheon, and Node.js.
+//       | I am currently expanding my skills by learning React.
+//     p
+//       | Beyond coding, I am also a passionate artist who loves to draw and create.
+//       | Art has always shaped the way I think about design, colour, and user experience.
+//       | I believe that great websites are not just functional &mdash; they are also beautiful,
+//       | and I carry that belief into every project I build.
+//     br
+//     a.btn-cv(href='My-CV.pdf' download='')
+//       | Download My CV
+//     a.btn-cv(href='/contactPage') Hire Me
+// section.skills-section
+//   .sec-head
+//     h2
+//       | What I 
+//       em Bring
+//     .sec-line
+//   .skills-grid
+//     .skill-tile
+//       i.bi.bi-code-slash.tile-icon
+//       h5 Frontend Development
+//       small HTML, CSS, JavaScript, React (learning), Bootstrap
+//     .skill-tile
+//       i.bi.bi-server.tile-icon
+//       h5 Backend &amp; CMS
+//       small Node.js, WordPress, Webflow, Elementor, WooCommerce, Pantheon
+//     .skill-tile
+//       i.bi.bi-router.tile-icon
+//       h5 Networking &amp; Systems
+//       small LAN/WAN, TCP/IP, DNS, DHCP, LDAP, Windows Server, VirtualBox
+//     .skill-tile
+//       i.bi.bi-palette.tile-icon
+//       h5 Art &amp; Design
+//       small Drawing, illustration, visual storytelling &amp; creative design
+//     .skill-tile
+//       i.bi.bi-heart-pulse.tile-icon
+//       h5 Psychology Skills
+//       small Counseling, therapeutic approaches, mental health &amp; mental illnesses
+//     .skill-tile
+//       i.bi.bi-people.tile-icon
+//       h5 Soft Skills
+//       small Teamwork, communication, problem solving, time management &amp; adaptability
+//   br
+//   a.btn-cv(href='/contactPage') Hire Me
+// section#projects.projects-section
+//   .sec-head
+//     h2
+//       | My 
+//       em Projects
+//     .sec-line
+//   .projects-grid
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/y4c.jpg' alt='Web Application')
+//         .proj-overlay
+//           a(href='Young4Chicksx.zip' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat Node.js &middot; HTML &middot; CSS &middot; JavaScript
+//         h5 Web Application
+//         p
+//           | Built a functional web application from scratch, implementing features for user interaction,
+//           | data management, and system functionality. Configured a local network setup for team
+//           | collaboration and testing.
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/P~Banks.jpg' alt='Portfolio Website')
+//         .proj-overlay
+//           a(href=' https://phoebes-sublime-site-913a0d.webflow.io/' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat Webflow
+//         h5 Phoebe&apos;s Sublime Site
+//         p
+//           | Designed and managed a personal portfolio website using Webflow, showcasing my work and skills.
+//           | Ensured the website was accessible over LAN for testing and review during development.
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/polariod.jpeg' alt='E-commerce Website')
+//         .proj-overlay
+//           a(href='https://dev-pheebz-camerati.pantheonsite.io/' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat WordPress &middot; WooCommerce &middot; Elementor &middot; Pantheon
+//         h5 Pheebz-Camerati
+//         p
+//           | Developed and managed a full e-commerce online store platform. Implemented DNS settings
+//           | for domain configuration and handled product listings, payments, and store management.
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/greenRubicorn.jpeg' alt='Business Website')
+//         .proj-overlay
+//           a(href='https://pheebzautolotrides.netlify.app/' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat HTML &middot; CSS
+//         h5 Pheebz-AutoLot-Rides
+//         p
+//           | Built a business website from scratch using HTML and CSS for a local automobile business.
+//           | Tested the site&apos;s accessibility over a local network to ensure it worked correctly
+//           | across different devices.
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/cyberSecurity.jpeg' alt='Systems Admin Project')
+//         .proj-overlay
+//           a(href='Young4Chicksx.zip' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat VirtualBox &middot; Windows Server 2016 &middot; DNS &middot; DHCP &middot; LDAP
+//         h5 Systems Admin Project
+//         p
+//           | Set up a virtualized environment with Windows Server and client machines. Configured a
+//           | Domain Controller, DNS, DHCP, and LDAP. Created domain users, groups, organisational
+//           | units, and managed permissions across the network.
+//     .project-card
+//       .proj-img-wrap
+//         img(src='public/assets/art.jpeg' alt='Art Gallery')
+//         .proj-overlay
+//           a(href='https://creative-cards-perushia.netlify.app/' target='_blank') View Project
+//       .proj-body
+//         span.proj-cat Art &amp; Web Design
+//         h5 Art Gallery Website
+//         p
+//           | Designed and built an online art gallery to display my own digital artwork and illustrations.
+//           | The site was built with a strong focus on visual appeal, creativity, and a smooth,
+//           | user-friendly experience that reflects my artistic background.
+//     br
+//     div(style='text-align: center; margin-top: 2rem;')
+//       a.btn-cv(href='/contactPage')
+//         | Hire Me
+// section.skills-section
+//   .sec-head
+//     h2
+//       | My 
+//       em Education
+//     .sec-line
+//   .skills-grid
+//     .skill-tile
+//       i.bi.bi-mortarboard.tile-icon
+//       h5 Postgraduate Diploma in IT
+//       small
+//         | Uganda Management Institute | 2025 &ndash; Present.
+//         | Focus: Computing systems, networking, databases, ICT management, and information systems.
+//     .skill-tile
+//       i.bi.bi-laptop.tile-icon
+//       h5 Certificate &mdash; Software Development
+//       small
+//         | Refactory Academy | May &ndash; Aug 2025.
+//         | Focus: Lean &amp; Agile, HTML, CSS, GitHub, GitLab, JavaScript, Object-oriented Development.
+//     .skill-tile
+//       i.bi.bi-pc-display.tile-icon
+//       h5 Certificate &mdash; Software Development
+//       small
+//         | Refactory Academy | Feb &ndash; May 2025.
+//         | Focus: Introduction to Computing, HCD, HTML, CSS, CMS, Entrepreneurship &amp; Work
+//         | Readiness.
+//     .skill-tile
+//       i.bi.bi-heart.tile-icon
+//       h5 BSc. Counseling Psychology
+//       small
+//         | University of Kisubi | 2022 &ndash; 2024.
+//         | Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.
+//     .skill-tile
+//       i.bi.bi-journal-medical.tile-icon
+//       h5 Diploma &mdash; Counseling Psychology
+//       small
+//         | University of Kisubi | 2019 &ndash; 2021.
+//         | Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.
+//     br
+//     div
+//       br
+//       a.btn-cv(href='/contactPage') Hire Me
+// section.about-banner
+//   div
+//     h2.about-banner-title
+//       | Work
+//       br
+//       | Experience.
+//   .about-banner-body
+//     p
+//       strong(style='color: var(--blush);')
+//         | Baskerville Primary School &mdash; Acting Bursar (Jan &ndash; Aug
+//         | 2019)
+//       br
+//       |                 Handled administrative and financial tasks for the school, managing records,
+//       |                 budgets, and day-to-day financial operations. This role strengthened my management,
+//       |                 organisation, and leadership skills in a fast-paced environment.
+//     p
+//       strong(style='color: var(--blush);') Youth Alive Uganda &mdash; Community Facilitator (May &ndash; Dec)
+//       br
+//       |                 Conducted talks and motivation sessions with young people across the community,
+//       |                 focusing on personal development, life skills, and positive choices. This role
+//       |                 strengthened my communication, persuasion, and public engagement skills.
+//     p
+//       strong(style='color: var(--blush);') Perfect Woods &mdash; Workshop Assistant (2021)
+//       br
+//       |                 Worked in a furniture workshop environment, developing hands-on practical skills,
+//       |                 attention to detail, and the ability to work effectively as part of a team
+//       |                 to meet production goals and deadlines.
+//   div
+//     a.btn-cv(href='contact.html') Hire Me
+// footer
+//   span.footer-brand Phoebe Mutebi
+//   ul.footer-nav
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+//   small &copy; 2025 Phoebe Mutebi. All rights reserved.
+// script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js' integrity='sha384-ENjdO4Dr2bkBIFxQpeoA6lu9ZP1hb7U1X1pGpJ9zB65y3I1+' crossorigin='anonymous')
+// script(src='pheebz.js')
+
+// contact.pug:
+// doctype html
+// head
+//   meta(charset='UTF-8')
+//   meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//   title Pheebz-Portfolio
+//   link(href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap' rel='stylesheet')
+//   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css')
+//   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet')
+//   link(rel='stylesheet' href='public/css/style.css')
+// nav.navbar
+//   a.navbar-brand(href='#') My Portfolio
+//   ul.nav-links
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+// section.connect-section
+//   .connect-left
+//     h2
+//       | Let&apos;s Work
+//       br
+//       em Together
+//     p
+//       | I am currently open to freelance projects, part-time opportunities, and full-time positions
+//       | where I can contribute my frontend development skills, artistic perspective, networking knowledge,
+//       | and growing experience with modern web technologies. Whether you need a website, a web application,
+//       | an e-commerce store, or a creative digital solution, I would love to hear from you and
+//       | bring your ideas to life.
+//     a.btn-fill(href='/formPage') Get In Touch
+//   .social-links
+//     a(href='#')
+//       i.bi.bi-instagram
+//       |  Instagram
+//     a(href='#')
+//       i.bi.bi-twitter
+//       |  Twitter
+//     a(href='#')
+//       i.bi.bi-whatsapp
+//       |  WhatsApp
+//     a(href='#')
+//       i.bi.bi-linkedin
+//       |  LinkedIn
+// footer
+//   span.footer-brand Phoebe Mutebi
+//   ul.footer-nav
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+//   small &copy; 2025 Phoebe Mutebi. All rights reserved.
+// script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js' integrity='sha384-ENjdO4Dr2bkBIFxQpeoA6lu9ZP1hb7U1X1pGpJ9zB65y3I1+' crossorigin='anonymous')
+// script(src='public/js/pheebz.js')
+
+// form.pug:
+// doctype html
+// head
+//   meta(charset='UTF-8')
+//   meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//   title Pheebz-Portfolio
+//   link(href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap' rel='stylesheet')
+//   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css')
+//   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet')
+//   link(rel='stylesheet' href='public/css/style.css')
+//   link(rel='stylesheet' href='public/css/form.css')
+// nav.navbar
+//   a.navbar-brand(href='#') My Portfolio
+//   ul.nav-links
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+// section.contact-section
+//   .contact-intro
+//     h2.contact-title
+//       | Get In 
+//       em Touch
+//       br
+//       | With Me.
+//     .contact-image
+//       img(src='public/assets/codingC.jpeg' alt='coding')
+//       p.image-text
+//         | I&apos;m open to freelance, part-time, and full-time opportunities.
+//         | Got a project or just wanna say hi?
+//       .social-links
+//         a(href='#')
+//           i.bi.bi-instagram
+//           |  Instagram
+//         a(href='#')
+//           i.bi.bi-twitter
+//           |  Twitter
+//         a(href='https://wa.me/256784765697')
+//           i.bi.bi-whatsapp
+//           |  WhatsApp
+//         a(href='https://www.linkedin.com/in/phoebe-mutebi-25844226a')
+//           i.bi.bi-linkedin
+//           |                         LinkedIn
+//   .contact-form-wrap
+//     h3 Send Me a Message
+//     p Fill in the form below and I will get back to you as soon as possible.
+//     form(action='' method='POST')
+//       .form-row
+//         .form-group
+//           label(for='name') Full Name *
+//           input#name(type='text' name='name' placeholder='e.g. Kinalwa Natasha')
+//         .form-group
+//           label(for='company') Company / Organisation
+//           input#company(type='text' name='company' placeholder='e.g. Perfect Woods')
+//       .form-row
+//         .form-group
+//           label(for='email') Email Address *
+//           input#email(type='email' name='email' placeholder='you@gmail.com')
+//         .form-group
+//           label(for='phone') Phone / Contact
+//           input#phone(type='tel' name='phone' placeholder='+(256) 700 777 000')
+//       .form-group
+//         label(for='address') Address / Location
+//         input#address(type='text' name='address' placeholder='e.g. Kampala, Uganda')
+//       .form-group
+//         label(for='subject') What Are You Looking For?
+//         select#subject(name='subject')
+//           option(value='' disabled='' selected='') Select an option
+//           option(value='freelance') Freelance Project
+//           option(value='parttime') Part-time Opportunity
+//           option(value='fulltime') Full-time Position
+//           option(value='collaboration') Collaboration
+//           option(value='other') Other
+//       .form-group
+//         label(for='message') Your Message *
+//         textarea#message(name='message' placeholder="Tell me about your project, opportunity, or anything you'd like to share...")
+//       button.btn-submit(type='submit')
+//         | Send Message &nbsp; 
+//         i.bi.bi-send
+//       span#formMsg(style="display:block; margin-top:1rem; font-size:0.82rem; font-family:'Jost',sans-serif;")
+// .cv-row
+//   p Want to know more about my experience and qualifications?
+//   a.btn-cv(href='My-CV.pdf' download='')
+//     | Download My CV
+// footer
+//   span.footer-brand Phoebe Mutebi
+//   ul.footer-nav
+//     li
+//       a(href='/indexPage') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+//   small &copy; 2025 Phoebe Mutebi. All rights reserved.
+// script.
+//   const form = document.querySelector('form');
+//   form.addEventListener('submit', function (e) {
+//   e.preventDefault();
+//   const name = document.getElementById('name').value.trim();
+//   const email = document.getElementById('email').value.trim();
+//   const message = document.getElementById('message').value.trim();
+//   if (!name || !email || !message) {
+//   document.getElementById('formMsg').innerHTML = 'Please fill in your Name, Email and Message before sending.';
+//   document.getElementById('formMsg').style.color = 'red';
+//   return;
+//   }
+//   if (!email.includes('@') || !email.includes('.')) {
+//   document.getElementById('formMsg').innerHTML = 'Please enter a valid email address.';
+//   document.getElementById('formMsg').style.color = 'red';
+//   return;
+//   }
+//   document.getElementById('formMsg').innerHTML = 'Thank you ' + name + '! Your message has been sent. I will get back to you soon 😊';
+//   document.getElementById('formMsg').style.color = 'green';
+//   form.reset();
+//   });
+
+// index.pug:
+// doctype html
+// head
+//   meta(charset='UTF-8')
+//   meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//   title Pheebz-Portfolio
+//   link(href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap' rel='stylesheet')
+//   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css')
+//   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet')
+//   link(rel='stylesheet' href='public/css/style.css')
+// nav.navbar
+//   a.navbar-brand(href='#') My Portfolio
+//   ul.nav-links
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+// section#home.hero
+//   .hero-photo-side
+//     img(src='public/assets/P~Banks~002.jpg' alt='Pheebz')
+//     .blob-br
+//     .blob-tl
+//     svg.deco-svg(viewbox='0 0 400 600' fill='none' xmlns='http://www.w3.org/2000/svg')
+//       path(d='M30 560 Q120 340 260 80 Q310 10 390 40' stroke='#fdf8f3' stroke-width='1' fill='none' opacity='0.3')
+//       path(d='M55 560 Q145 350 280 100 Q330 28 400 60' stroke='#fdf8f3' stroke-width='0.6' fill='none' opacity='0.2')
+//       circle(cx='310' cy='130' r='50' stroke='#fdf8f3' stroke-width='0.8' fill='none' opacity='0.25')
+//       circle(cx='310' cy='130' r='25' stroke='#fdf8f3' stroke-width='0.5' fill='none' opacity='0.2')
+//     .hero-label
+//       span Developer &amp; Artist &amp; Psychologist
+//       h2 Phoebe Mutebi
+//   .hero-text-side
+//     p.eyebrow Kampala, Uganda
+//     h1.hero-heading
+//       | I&apos;m a 
+//       em Developer
+//       strong Phoebe Mutebi
+//     hr.hero-rule
+//     p.hero-para
+//       | A digital mental health professional with a background in psychology and web development.
+//       | Experienced in front-end website development, web applications, and content management systems.
+//       | Skilled in building and managing websites using modern tools and technologies including Node.js.
+//       | Knowledgeable in networking fundamentals (LAN/WAN, TCP/IP, DNS) and systems administration.
+//       | Currently enhancing IT and systems skills through a Postgraduate Diploma in Information Technology
+//       | at Uganda Management Institute. Open to learning new skills and expanding knowledge in technology
+//       | and digital solutions &mdash; currently learning React.
+//     .tag-row
+//       span.tag HTML &amp; CSS
+//       span.tag JavaScript
+//       span.tag Node.js
+//       span.tag React
+//       span.tag WordPress
+//       span.tag Webflow
+//       span.tag Networking
+//       span.tag Art &amp; Design
+//     .btn-row
+//       a.btn-fill(href='/aboutPage') Learn More
+//       a.btn-line(href='/contactPage') Hire Me
+//     br
+//     .text-center
+//       a.btn-cv(href='My-CV.pdf' download='')
+//         | Download My CV
+// footer
+//   span.footer-brand Phoebe Mutebi
+//   ul.footer-nav
+//     li
+//       a(href='/') Home
+//     li
+//       a(href='/aboutPage') Pheebz
+//     li
+//       a(href='/contactPage') Connect
+//   small &copy; 2025 Phoebe Mutebi. All rights reserved.
+
+//   My HTML Files are below:
+//    about.html
+//    <!DOCTYPE html>
+// <html lang="en">
+
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Pheebz-Portfolio</title>
+//     <link
+//         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+//         rel="stylesheet">
+//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+//     <link rel="stylesheet" href="public/css/style.css">
+// </head>
+
+// <body>
+//     <nav class="navbar">
+//         <a class="navbar-brand" href="index.html">My Portfolio</a>
+//         <ul class="nav-links">
+//             <li><a href="index.html">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+//     </nav>
+
+//     <section id="about" class="about-banner">
+
+//         <div>
+//             <h2 class="about-banner-title">About<br>Me.</h2>
+//         </div>
+
+//         <div class="about-banner-body">
+//             <p>
+//                 Hi, I'm Phoebe — a developer, artist, and lifelong learner based in Kampala, Uganda.
+//                 I hold a Bachelor of Science in Counseling Psychology and I am currently pursuing
+//                 a Postgraduate Diploma in Information Technology at Uganda Management Institute,
+//                 deepening my knowledge in computing systems, networking, databases, and ICT management.
+//             </p>
+//             <p>
+//                 I trained at Refactory Academy where I studied the foundations of software development,
+//                 covering HTML, CSS, JavaScript, GitHub, GitLab, and object-oriented development.
+//                 I have since built websites, web applications, and e-commerce platforms using
+//                 WordPress, Webflow, WooCommerce, Elementor, Pantheon, and Node.js.
+//                 I am currently expanding my skills by learning React.
+//             </p>
+//             <p>
+//                 Beyond coding, I am also a passionate artist who loves to draw and create.
+//                 Art has always shaped the way I think about design, colour, and user experience.
+//                 I believe that great websites are not just functional — they are also beautiful,
+//                 and I carry that belief into every project I build.
+//             </p>
+
+//             <br>
+
+//             <a href="My-CV.pdf" class="btn-cv" download>
+//                 Download My CV
+//             </a>
+
+//             <a href="contact.html" class="btn-cv">Hire Me</a>
+
+//         </div>
+
+//     </section>
+
+//     <section class="skills-section">
+
+//         <div class="sec-head">
+//             <h2>What I <em>Bring</em></h2>
+//             <div class="sec-line"></div>
+//         </div>
+
+//         <div class="skills-grid">
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-code-slash tile-icon"></i>
+//                 <h5>Frontend Development</h5>
+//                 <small>HTML, CSS, JavaScript, React (learning), Bootstrap</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-server tile-icon"></i>
+//                 <h5>Backend &amp; CMS</h5>
+//                 <small>Node.js, WordPress, Webflow, Elementor, WooCommerce, Pantheon</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-router tile-icon"></i>
+//                 <h5>Networking &amp; Systems</h5>
+//                 <small>LAN/WAN, TCP/IP, DNS, DHCP, LDAP, Windows Server, VirtualBox</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-palette tile-icon"></i>
+//                 <h5>Art &amp; Design</h5>
+//                 <small>Drawing, illustration, visual storytelling &amp; creative design</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-heart-pulse tile-icon"></i>
+//                 <h5>Psychology Skills</h5>
+//                 <small>Counseling, therapeutic approaches, mental health &amp; mental illnesses</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-people tile-icon"></i>
+//                 <h5>Soft Skills</h5>
+//                 <small>Teamwork, communication, problem solving, time management &amp; adaptability</small>
+//             </div>
+
+//         </div>
+//         <br>
+//         <a href="contact.html" class="btn-cv">Hire Me</a>
+//     </section>
+
+//     <section id="projects" class="projects-section">
+
+//         <div class="sec-head">
+//             <h2>My <em>Projects</em></h2>
+//             <div class="sec-line"></div>
+//         </div>
+
+//         <div class="projects-grid">
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/y4c.jpg" alt="Web Application">
+//                     <div class="proj-overlay">
+//                         <a href="Young4Chicksx.zip" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+
+//                 <div class="proj-body">
+//                     <span class="proj-cat">Node.js · HTML · CSS · JavaScript</span>
+//                     <h5>Web Application</h5>
+//                     <p>
+//                         Built a functional web application from scratch, implementing features for user interaction,
+//                         data management, and system functionality. Configured a local network setup for team
+//                         collaboration and testing.
+//                     </p>
+//                 </div>
+//             </div>
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/P~Banks.jpg" alt="Portfolio Website">
+//                     <div class="proj-overlay">
+//                         <a href=" https://phoebes-sublime-site-913a0d.webflow.io/" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+//                 <div class="proj-body">
+//                     <span class="proj-cat">Webflow</span>
+//                     <h5>Phoebe's Sublime Site</h5>
+//                     <p>Designed and managed a personal portfolio website using Webflow, showcasing my work and skills.
+//                         Ensured the website was accessible over LAN for testing and review during development.</p>
+//                 </div>
+//             </div>
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/polariod.jpeg" alt="E-commerce Website">
+//                     <div class="proj-overlay">
+//                         <a href="https://dev-pheebz-camerati.pantheonsite.io/" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+//                 <div class="proj-body">
+//                     <span class="proj-cat">WordPress · WooCommerce · Elementor · Pantheon</span>
+//                     <h5>Pheebz-Camerati</h5>
+//                     <p>Developed and managed a full e-commerce online store platform. Implemented DNS settings
+//                         for domain configuration and handled product listings, payments, and store management.</p>
+//                 </div>
+//             </div>
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/greenRubicorn.jpeg" alt="Business Website">
+//                     <div class="proj-overlay">
+//                         <a href="https://pheebzautolotrides.netlify.app/" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+//                 <div class="proj-body">
+//                     <span class="proj-cat">HTML · CSS</span>
+//                     <h5>Pheebz-AutoLot-Rides</h5>
+//                     <p>Built a business website from scratch using HTML and CSS for a local automobile business.
+//                         Tested the site's accessibility over a local network to ensure it worked correctly
+//                         across different devices.</p>
+//                 </div>
+//             </div>
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/cyberSecurity.jpeg" alt="Systems Admin Project">
+//                     <div class="proj-overlay">
+//                         <a href="Young4Chicksx.zip" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+//                 <div class="proj-body">
+//                     <span class="proj-cat">VirtualBox · Windows Server 2016 · DNS · DHCP · LDAP</span>
+//                     <h5>Systems Admin Project</h5>
+//                     <p>Set up a virtualized environment with Windows Server and client machines. Configured a
+//                         Domain Controller, DNS, DHCP, and LDAP. Created domain users, groups, organisational
+//                         units, and managed permissions across the network.</p>
+//                 </div>
+//             </div>
+
+//             <div class="project-card">
+//                 <div class="proj-img-wrap">
+//                     <img src="public/assets/art.jpeg" alt="Art Gallery">
+//                     <div class="proj-overlay">
+//                         <a href="https://creative-cards-perushia.netlify.app/" target="_blank">View Project</a>
+//                     </div>
+//                 </div>
+//                 <div class="proj-body">
+//                     <span class="proj-cat">Art &amp; Web Design</span>
+//                     <h5>Art Gallery Website</h5>
+//                     <p>Designed and built an online art gallery to display my own digital artwork and illustrations.
+//                         The site was built with a strong focus on visual appeal, creativity, and a smooth,
+//                         user-friendly experience that reflects my artistic background.</p>
+//                 </div>
+//             </div>
+//             <br>
+
+//             <div style="text-align: center; margin-top: 2rem;">
+//                 <a href="contact.html" class="btn-cv">
+//                     Hire Me
+//                 </a>
+//             </div>
+
+
+//     </section>
+
+//     <section class="skills-section">
+
+//         <div class="sec-head">
+//             <h2>My <em>Education</em></h2>
+//             <div class="sec-line"></div>
+//         </div>
+
+//         <div class="skills-grid">
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-mortarboard tile-icon"></i>
+//                 <h5>Postgraduate Diploma in IT</h5>
+//                 <small>Uganda Management Institute | 2025 – Present.
+//                     Focus: Computing systems, networking, databases, ICT management, and information systems.</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-laptop tile-icon"></i>
+//                 <h5>Certificate — Software Development</h5>
+//                 <small>Refactory Academy | May – Aug 2025.
+//                     Focus: Lean &amp; Agile, HTML, CSS, GitHub, GitLab, JavaScript, Object-oriented Development.</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-pc-display tile-icon"></i>
+//                 <h5>Certificate — Software Development</h5>
+//                 <small>Refactory Academy | Feb – May 2025.
+//                     Focus: Introduction to Computing, HCD, HTML, CSS, CMS, Entrepreneurship &amp; Work
+//                     Readiness.</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-heart tile-icon"></i>
+//                 <h5>BSc. Counseling Psychology</h5>
+//                 <small>University of Kisubi | 2022 – 2024.
+//                     Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.</small>
+//             </div>
+
+//             <div class="skill-tile">
+//                 <i class="bi bi-journal-medical tile-icon"></i>
+//                 <h5>Diploma — Counseling Psychology</h5>
+//                 <small>University of Kisubi | 2019 – 2021.
+//                     Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.</small>
+//             </div>
+//             <br>
+//             <div>
+//                 <br>
+//                 <a href="contact.html" class="btn-cv">Hire Me</a>
+
+//                 </a>
+//             </div>
+
+
+//         </div>
+
+//     </section>
+
+//     <section class="about-banner">
+
+//         <div>
+//             <h2 class="about-banner-title">Work<br>Experience.</h2>
+//         </div>
+
+//         <div class="about-banner-body">
+
+//             <p>
+//                 <strong style="color: var(--blush);">Baskerville Primary School — Acting Bursar (Jan – Aug
+//                     2019)</strong><br>
+//                 Handled administrative and financial tasks for the school, managing records,
+//                 budgets, and day-to-day financial operations. This role strengthened my management,
+//                 organisation, and leadership skills in a fast-paced environment.
+//             </p>
+
+//             <p>
+//                 <strong style="color: var(--blush);">Youth Alive Uganda — Community Facilitator (May – Dec)</strong><br>
+//                 Conducted talks and motivation sessions with young people across the community,
+//                 focusing on personal development, life skills, and positive choices. This role
+//                 strengthened my communication, persuasion, and public engagement skills.
+//             </p>
+
+//             <p>
+//                 <strong style="color: var(--blush);">Perfect Woods — Workshop Assistant (2021)</strong><br>
+//                 Worked in a furniture workshop environment, developing hands-on practical skills,
+//                 attention to detail, and the ability to work effectively as part of a team
+//                 to meet production goals and deadlines.
+//             </p>
+
+//         </div>
+//         <div>
+
+//             <a href="contact.html" class="btn-cv">Hire Me</a>
+
+//         </div>
+
+//     </section>
+
+//     <footer>
+
+//         <span class="footer-brand">Phoebe Mutebi</span>
+
+//         <ul class="footer-nav">
+//             <li><a href="#home">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+
+//         <small>&copy; 2025 Phoebe Mutebi. All rights reserved.</small>
+
+//     </footer>
+
+//     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+//         integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6lu9ZP1hb7U1X1pGpJ9zB65y3I1+" crossorigin="anonymous"></script>
+//     <script src="pheebz.js"></script>
+
+// </body>
+
+// </html>
+
+// contact.html
+// <!DOCTYPE html>
+// <html lang="en">
+
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Contact Pheebz-Portfolio</title>
+//     <link
+//         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+//         rel="stylesheet">
+//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+//     <link rel="stylesheet" href="public/css/style.css">
+// </head>
+
+// <body>
+
+//     <nav class="navbar">
+//         <a class="navbar-brand" href="index.html">My Portfolio</a>
+//         <ul class="nav-links">
+//             <li><a href="index.html">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+//     </nav>
+
+//     <section class="connect-section">
+
+//         <div class="connect-left">
+//             <h2>Let's Work<br><em>Together</em></h2>
+//             <p>
+//                 I am currently open to freelance projects, part-time opportunities, and full-time positions
+//                 where I can contribute my frontend development skills, artistic perspective, networking knowledge,
+//                 and growing experience with modern web technologies. Whether you need a website, a web application,
+//                 an e-commerce store, or a creative digital solution, I would love to hear from you and
+//                 bring your ideas to life.
+//             </p>
+//             <a href="form.html" class="btn-fill">Get In Touch</a>
+//         </div>
+
+//         <div class="social-links">
+//             <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+//             <a href="#"><i class="bi bi-twitter"></i> Twitter</a>
+//             <a href="#"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+//             <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
+//         </div>
+
+//     </section>
+
+//     <footer>
+
+//         <span class="footer-brand">Phoebe Mutebi</span>
+
+//         <ul class="footer-nav">
+//             <li><a href="#home">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+
+//         <small>&copy; 2025 Phoebe Mutebi. All rights reserved.</small>
+
+//     </footer>
+
+//     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+//         integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6lu9ZP1hb7U1X1pGpJ9zB65y3I1+" crossorigin="anonymous"></script>
+//     <script src="public/js/pheebz.js"></script>
+
+// </body>
+
+// </html>
+
+
+// form.html
+// <!DOCTYPE html>
+// <html lang="en">
+
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Pheebz-Portfolio</title>
+
+//     <link
+//         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+//         rel="stylesheet">
+//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+//     <link rel="stylesheet" href="public/css/style.css">
+//     <link rel="stylesheet" href="public/css/form.css">
+// </head>
+
+// <body>
+
+//     <nav class="navbar">
+//         <a class="navbar-brand" href="index.html">My Portfolio</a>
+//         <ul class="nav-links">
+//             <li><a href="index.html">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+//     </nav>
+
+//     <section class="contact-section">
+
+//         <div class="contact-intro">
+
+//             <h2 class="contact-title">Get In <em>Touch</em><br>With Me.</h2>
+
+//             <div class="contact-image">
+//                 <img src="public/assets/codingC.jpeg" alt="coding">
+
+//                 <p class="image-text">
+//                     I'm open to freelance, part-time, and full-time opportunities.
+//                     Got a project or just wanna say hi?
+//                 </p>
+
+
+//                 <div class="social-links">
+//                     <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+//                     <a href="#"><i class="bi bi-twitter"></i> Twitter</a>
+//                     <a href="https://wa.me/256784765697"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+//                     <a href="https://www.linkedin.com/in/phoebe-mutebi-25844226a"><i class="bi bi-linkedin"></i>
+//                         LinkedIn</a>
+//                 </div>
+//             </div>
+
+//         </div>
+
+//         <div class="contact-form-wrap">
+
+//             <h3>Send Me a Message</h3>
+//             <p>Fill in the form below and I will get back to you as soon as possible.</p>
+
+//             <form action="" method="POST">
+
+//                 <div class="form-row">
+//                     <div class="form-group">
+//                         <label for="userName">Full Name *</label>
+//                         <input type="text" id="name" name="name" placeholder="e.g. Kinalwa Natasha">
+//                     </div>
+//                     <div class="form-group">
+//                         <label for="company">Company / Organisation</label>
+//                         <input type="text" id="company" name="company" placeholder="e.g. Perfect Woods">
+//                     </div>
+//                 </div>
+
+//                 <div class="form-row">
+//                     <div class="form-group">
+//                         <label for="email">Email Address *</label>
+//                         <input type="email" id="email" name="email" placeholder="you@gmail.com">
+//                     </div>
+//                     <div class="form-group">
+//                         <label for="phone">Phone / Contact</label>
+//                         <input type="tel" id="phone" name="phone" placeholder="+(256) 700 777 000">
+//                     </div>
+//                 </div>
+
+//                 <div class="form-group">
+//                     <label for="address">Address / Location</label>
+//                     <input type="text" id="address" name="address" placeholder="e.g. Kampala, Uganda">
+//                 </div>
+
+//                 <div class="form-group">
+//                     <label for="subject">What Are You Looking For?</label>
+//                     <select id="subject" name="subject">
+//                         <option value="" disabled selected>Select an option</option>
+//                         <option value="freelance">Freelance Project</option>
+//                         <option value="parttime">Part-time Opportunity</option>
+//                         <option value="fulltime">Full-time Position</option>
+//                         <option value="collaboration">Collaboration</option>
+//                         <option value="other">Other</option>
+//                     </select>
+//                 </div>
+
+//                 <div class="form-group">
+//                     <label for="message">Your Message *</label>
+//                     <textarea id="message" name="message"
+//                         placeholder="Tell me about your project, opportunity, or anything you'd like to share..."></textarea>
+//                 </div>
+
+//                 <button type="submit" class="btn-submit">
+//                     Send Message &nbsp; <i class="bi bi-send"></i>
+//                 </button>
+
+//                 <span id="formMsg"
+//                     style="display:block; margin-top:1rem; font-size:0.82rem; font-family:'Jost',sans-serif;"></span>
+
+//             </form>
+
+//         </div>
+
+//     </section>
+
+//     <div class="cv-row">
+//         <p>Want to know more about my experience and qualifications?</p>
+//         <a href="My-CV.pdf" class="btn-cv" download>
+//             Download My CV
+//         </a>
+//     </div>
+
+//     <footer>
+
+//         <span class="footer-brand">Phoebe Mutebi</span>
+
+//         <ul class="footer-nav">
+//             <li><a href="index.html">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+
+//         <small>&copy; 2025 Phoebe Mutebi. All rights reserved.</small>
+
+//     </footer>
+
+//     <script>
+//         const form = document.querySelector('form');
+
+//         form.addEventListener('submit', function (e) {
+//             e.preventDefault();
+
+//             const name = document.getElementById('name').value.trim();
+//             const email = document.getElementById('email').value.trim();
+//             const message = document.getElementById('message').value.trim();
+
+//             if (!name || !email || !message) {
+//                 document.getElementById('formMsg').innerHTML = 'Please fill in your Name, Email and Message before sending.';
+//                 document.getElementById('formMsg').style.color = 'red';
+//                 return;
+//             }
+
+//             if (!email.includes('@') || !email.includes('.')) {
+//                 document.getElementById('formMsg').innerHTML = 'Please enter a valid email address.';
+//                 document.getElementById('formMsg').style.color = 'red';
+//                 return;
+//             }
+
+//             document.getElementById('formMsg').innerHTML = 'Thank you ' + name + '! Your message has been sent. I will get back to you soon 😊';
+//             document.getElementById('formMsg').style.color = 'green';
+
+//             form.reset();
+//         });
+
+//     </script>
+
+//     <SCript src="/public/js/script.js"></SCript>
+
+
+// </body>
+
+// </html>
+
+// index.html:
+// <!DOCTYPE html>
+// <html lang="en">
+
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Pheebz-Portfolio</title>
+
+//     <link
+//         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+//         rel="stylesheet">
+//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+//     <link rel="stylesheet" href="public/css/style.css">
+// </head>
+
+// <body>
+//     <nav class="navbar">
+//         <a class="navbar-brand" href="index.html">My Portfolio</a>
+//         <ul class="nav-links">
+//             <li><a href="#home">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+//     </nav>
+
+//     <section id="home" class="hero">
+
+//         <div class="hero-photo-side">
+
+//             <img src="public/assets/P~Banks~002.jpg" alt="Pheebz">
+
+//             <div class="blob-br"></div>
+//             <div class="blob-tl"></div>
+
+//             <svg class="deco-svg" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                 <path d="M30 560 Q120 340 260 80 Q310 10 390 40" stroke="#fdf8f3" stroke-width="1" fill="none"
+//                     opacity="0.3" />
+//                 <path d="M55 560 Q145 350 280 100 Q330 28 400 60" stroke="#fdf8f3" stroke-width="0.6" fill="none"
+//                     opacity="0.2" />
+//                 <circle cx="310" cy="130" r="50" stroke="#fdf8f3" stroke-width="0.8" fill="none" opacity="0.25" />
+//                 <circle cx="310" cy="130" r="25" stroke="#fdf8f3" stroke-width="0.5" fill="none" opacity="0.2" />
+//             </svg>
+
+//             <div class="hero-label">
+//                 <span>Developer &amp; Artist &amp; Psychologist</span>
+//                 <h2>Phoebe Mutebi</h2>
+//             </div>
+
+
+//         </div>
+
+//         <div class="hero-text-side">
+
+//             <p class="eyebrow">Kampala, Uganda</p>
+
+//             <h1 class="hero-heading">
+//                 I'm a <em>Developer</em>
+//                 <strong>Phoebe Mutebi</strong>
+//             </h1>
+
+//             <hr class="hero-rule">
+
+//             <p class="hero-para">
+//                 A digital mental health professional with a background in psychology and web development.
+//                 Experienced in front-end website development, web applications, and content management systems.
+//                 Skilled in building and managing websites using modern tools and technologies including Node.js.
+//                 Knowledgeable in networking fundamentals (LAN/WAN, TCP/IP, DNS) and systems administration.
+//                 Currently enhancing IT and systems skills through a Postgraduate Diploma in Information Technology
+//                 at Uganda Management Institute. Open to learning new skills and expanding knowledge in technology
+//                 and digital solutions — currently learning React.
+//             </p>
+
+//             <div class="tag-row">
+//                 <span class="tag">HTML &amp; CSS</span>
+//                 <span class="tag">JavaScript</span>
+//                 <span class="tag">Node.js</span>
+//                 <span class="tag">React</span>
+//                 <span class="tag">WordPress</span>
+//                 <span class="tag">Webflow</span>
+//                 <span class="tag">Networking</span>
+//                 <span class="tag">Art &amp; Design</span>
+//             </div>
+
+//             <div class="btn-row">
+//                 <a href="about.html" class="btn-fill">Learn More</a>
+//                 <a href="contact.html" class="btn-line">Hire Me</a>
+//             </div>
+//             <br>
+
+//             <div class="text-center">
+//                 <a href="My-CV.pdf" class="btn-cv" download>
+//                     Download My CV
+//                 </a>
+//             </div>
+
+
+//         </div>
+
+//     </section>
+
+//     <footer>
+
+//         <span class="footer-brand">Phoebe Mutebi</span>
+
+//         <ul class="footer-nav">
+//             <li><a href="#home">Home</a></li>
+//             <li><a href="about.html">Pheebz</a></li>
+//             <li><a href="contact.html">Connect</a></li>
+//         </ul>
+
+//         <small>&copy; 2025 Phoebe Mutebi. All rights reserved.</small>
+
+//     </footer>
+
+
+// </body>
+
+// </html>
+
+// etc
+
+// package.json:
+// {
+//   "name": "my-portfolio-nodejsumi",
+//   "version": "1.0.0",
+//   "main": "index.js",
+//   "scripts": {
+//     "test": "echo \"Error: no test specified\" && exit 1",
+//     "start": "nodemon index.js"
+//   },
+//   "author": "Phoebe Mutebi",
+//   "license": "ISC",
+//   "dependencies": {
+//     "connect-ensure-login": "^0.1.1",
+//     "connect-flash": "^0.1.1",
+//     "dotenv": "^17.3.1",
+//     "express": "^5.1.0",
+//     "express-session": "^1.18.2",
+//     "moment": "^2.30.1",
+//     "mongoose": "^8.23.0",
+//     "passport": "^0.7.0",
+//     "passport-local-mongoose": "^8.0.0",
+//     "path": "^0.12.7",
+//     "pug": "^3.0.3"
+//   },
+//   "devDependencies": {
+//     "nodemon": "^3.1.14"
+//   }
+// }
+
+
+
+

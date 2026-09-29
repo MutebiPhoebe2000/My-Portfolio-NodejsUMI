@@ -1,0 +1,261 @@
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Pheebz-Portfolio
+  link(href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap' rel='stylesheet')
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css')
+  link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet')
+  link(rel='stylesheet' href='/css/style.css')
+nav.navbar
+  a.navbar-brand(href='/') My Portfolio
+  ul.nav-links
+    li
+      a(href='/') Home
+    li
+      a(href='/about') Pheebz
+    li
+      a(href='/contact') Connect
+section#about.about-banner
+  div
+    h2.about-banner-title
+      | About
+      br
+      | Me.
+  .about-banner-body
+    p
+      | Hi, I&apos;m Phoebe &mdash; a developer, artist, and lifelong learner based in Kampala, Uganda.
+      | I hold a Bachelor of Science in Counseling Psychology and I am currently pursuing
+      | a Postgraduate Diploma in Information Technology at Uganda Management Institute,
+      | deepening my knowledge in computing systems, networking, databases, and ICT management.
+    p
+      | I trained at Refactory Academy where I studied the foundations of software development,
+      | covering HTML, CSS, JavaScript, GitHub, GitLab, and object-oriented development.
+      | I have since built websites, web applications, and e-commerce platforms using
+      | WordPress, Webflow, WooCommerce, Elementor, Pantheon, and Node.js.
+      | I am currently expanding my skills by learning React.
+    p
+      | Beyond coding, I am also a passionate artist who loves to draw and create.
+      | Art has always shaped the way I think about design, colour, and user experience.
+      | I believe that great websites are not just functional &mdash; they are also beautiful,
+      | and I carry that belief into every project I build.
+    br
+    a.btn-cv(href='/My-CV.pdf' download='')
+      | Download My CV
+    a.btn-cv(href='/contact') Hire Me
+section.skills-section
+  .sec-head
+    h2
+      | What I 
+      em Bring
+    .sec-line
+  .skills-grid
+    .skill-tile
+      i.bi.bi-code-slash.tile-icon
+      h5 Frontend Development
+      small HTML, CSS, JavaScript, React (learning), Bootstrap
+    .skill-tile
+      i.bi.bi-server.tile-icon
+      h5 Backend &amp; CMS
+      small Node.js, WordPress, Webflow, Elementor, WooCommerce, Pantheon
+    .skill-tile
+      i.bi.bi-router.tile-icon
+      h5 Networking &amp; Systems
+      small LAN/WAN, TCP/IP, DNS, DHCP, LDAP, Windows Server, VirtualBox
+    .skill-tile
+      i.bi.bi-palette.tile-icon
+      h5 Art &amp; Design
+      small Drawing, illustration, visual storytelling &amp; creative design
+    .skill-tile
+      i.bi.bi-heart-pulse.tile-icon
+      h5 Psychology Skills
+      small Counseling, therapeutic approaches, mental health &amp; mental illnesses
+    .skill-tile
+      i.bi.bi-people.tile-icon
+      h5 Soft Skills
+      small Teamwork, communication, problem solving, time management &amp; adaptability
+  br
+  a.btn-cv(href='/contact') Hire Me
+section#projects.projects-section
+  .sec-head
+    h2
+      | My 
+      em Projects
+    .sec-line
+  .projects-grid
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/y4c.jpg' alt='Web Application')
+        .proj-overlay
+          a(href='https://young4chicks-web.netlify.app' target='_blank') View Project
+      .proj-body
+        span.proj-cat Node.js &middot; Express &middot; MongoDB &middot; JavaScript &middot; Bootstrap
+        h5 Young4Chicks
+        p
+          | Built a functional web application for managing chick orders, farmers, feeds, and users. Implemented different user roles and features for managing information and supporting the daily operations of the platform.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/ays.jpeg' alt='Portfolio Website')
+        .proj-overlay
+          a(href='https://incomparable-torrone-1b1ae8.netlify.app' target='_blank') View Project
+      .proj-body
+        span.proj-cat HTML &middot; CSS &middot; JavaScript &middot; Node.js &middot; Express &middot; MongoDB
+        h5 African Youth Summit 2026
+        p
+          | Built a web application for conference registration and delegate management. Implemented registration, user management, and administrative features for handling participant information and supporting the organization of the event.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/P~Banks~002.jpg' alt='Portfolio Website')
+        .proj-overlay
+          a(href='https://pheebzportfolio.netlify.app/' target='_blank') View Project
+      .proj-body
+        span.proj-cat HTML &middot; CSS &middot; JavaScript &middot; Webflow
+        h5 My Portfolio
+        p
+          | Designed and developed a personal portfolio website to showcase my skills, experience, and projects. Organized the website into different sections to present my background, technical skills, work, and contact information.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/etaniaT-y.jpeg' alt='Portfolio Website')
+        .proj-overlay
+          a(href='https://bookingproject-nodejs.web.app?utm_source=chatgpt.com' target='_blank') View Project
+      .proj-body
+        span.proj-cat HTML &middot; CSS &middot; JavaScript &middot; Node.js &middot; Firebase
+        h5 Pheebz Booking Site
+        p
+          | Built a booking website for managing and displaying booking information online. Implemented the main website pages and interactive features to provide users with a simple way to view information and make bookings.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/polariod.jpeg' alt='E-commerce Website')
+        .proj-overlay
+          a(href='https://dev-pheebz-camerati.pantheonsite.io/' target='_blank') View Project
+      .proj-body
+        span.proj-cat WordPress &middot; WooCommerce &middot; Elementor &middot; Pantheon
+        h5 Pheebz-Camerati
+        p
+          | Developed and managed an e-commerce website for displaying products and supporting online store activities. Used WordPress, WooCommerce, and Elementor to create the website, organize products, and manage the store.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/whiteDressSmile.jpeg' alt='Portfolio Website')
+        .proj-overlay
+          a(href=' https://phoebes-sublime-site-913a0d.webflow.io/' target='_blank') View Project
+      .proj-body
+        span.proj-cat Webflow
+        h5 Phoebe&apos;s Sublime Site
+        p
+          | Designed and built a website using Webflow to create a simple and modern online presence. Organized the content and pages to provide a clear layout and an easy browsing experience for visitors.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/greenRubicorn.jpeg' alt='Business Website')
+        .proj-overlay
+          a(href='https://pheebzautolotrides.netlify.app/' target='_blank') View Project
+      .proj-body
+        span.proj-cat HTML &middot; CSS
+        h5 Pheebz-AutoLot-Rides
+        p
+          | Built a business website from scratch using HTML and CSS for an automobile business. Created the main pages and organized the content to present the business information and available services in a simple way.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/cyberSecurity.jpeg' alt='Systems Admin Project')
+        .proj-overlay
+          a(href='#' target='_blank') View Project
+      .proj-body
+        span.proj-cat VirtualBox &middot; Windows Server 2016 &middot; DNS &middot; DHCP &middot; LDAP
+        h5 Systems Administration
+        p
+          | Set up a virtual network environment using VirtualBox, Windows Server, and client machines. Configured DNS, DHCP, LDAP, domain users, groups, and permissions to manage the network and connected computers.
+    .project-card
+      .proj-img-wrap
+        img(src='/assets/art.jpeg' alt='Art Gallery')
+        .proj-overlay
+          a(href='https://creative-cards-perushia.netlify.app/' target='_blank') View Project
+      .proj-body
+        span.proj-cat HTML &middot; CSS &middot; Web Design
+        h5 Art Gallery Website
+        p
+          | Designed and built an online art gallery for displaying digital artwork and illustrations. Organized the website to present the artwork clearly while focusing on a simple layout, visual presentation, and easy navigation.
+    br
+    div(style='text-align: center; margin-top: 2rem;')
+      a.btn-cv(href='/contact')
+        | Hire Me
+section.skills-section
+  .sec-head
+    h2
+      | My 
+      em Education
+    .sec-line
+  .skills-grid
+    .skill-tile
+      i.bi.bi-mortarboard.tile-icon
+      h5 Postgraduate Diploma in IT
+      small
+        | Uganda Management Institute | 2025 &ndash; Present.
+        | Focus: Computing systems, networking, databases, ICT management, and information systems.
+    .skill-tile
+      i.bi.bi-laptop.tile-icon
+      h5 Certificate &mdash; Software Development
+      small
+        | Refactory Academy | May &ndash; Aug 2025.
+        | Focus: Lean &amp; Agile, HTML, CSS, GitHub, GitLab, JavaScript, Object-oriented Development.
+    .skill-tile
+      i.bi.bi-pc-display.tile-icon
+      h5 Certificate &mdash; Software Development
+      small
+        | Refactory Academy | Feb &ndash; May 2025.
+        | Focus: Introduction to Computing, HCD, HTML, CSS, CMS, Entrepreneurship &amp; Work
+        | Readiness.
+    .skill-tile
+      i.bi.bi-heart.tile-icon
+      h5 BSc. Counseling Psychology
+      small
+        | University of Kisubi | 2022 &ndash; 2024.
+        | Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.
+    .skill-tile
+      i.bi.bi-journal-medical.tile-icon
+      h5 Diploma &mdash; Counseling Psychology
+      small
+        | University of Kisubi | 2019 &ndash; 2021.
+        | Focus: Counseling, mental health, mental illnesses, and therapeutic approaches.
+    br
+    div
+      br
+      a.btn-cv(href='/contact') Hire Me
+section.about-banner
+  div
+    h2.about-banner-title
+      | Work
+      br
+      | Experience.
+  .about-banner-body
+    p
+      strong(style='color: var(--blush);')
+        | Baskerville Primary School &mdash; Acting Bursar (Jan &ndash; Aug
+        | 2019)
+      br
+      |                 Handled administrative and financial tasks for the school, managing records,
+      |                 budgets, and day-to-day financial operations. This role strengthened my management,
+      |                 organisation, and leadership skills in a fast-paced environment.
+    p
+      strong(style='color: var(--blush);') Youth Alive Uganda &mdash; Community Facilitator (May &ndash; Dec)
+      br
+      |                 Conducted talks and motivation sessions with young people across the community,
+      |                 focusing on personal development, life skills, and positive choices. This role
+      |                 strengthened my communication, persuasion, and public engagement skills.
+    p
+      strong(style='color: var(--blush);') Perfect Woods &mdash; Workshop Assistant (2021)
+      br
+      |                 Worked in a furniture workshop environment, developing hands-on practical skills,
+      |                 attention to detail, and the ability to work effectively as part of a team
+      |                 to meet production goals and deadlines.
+  div
+    a.btn-cv(href='/contact') Hire Me
+footer
+  span.footer-brand Phoebe Mutebi
+  ul.footer-nav
+    li
+      a(href='/') Home
+    li
+      a(href='/about') Pheebz
+    li
+      a(href='/contact') Connect
+  small &copy; 2025 Phoebe Mutebi. All rights reserved.
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js' integrity='sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI' crossorigin='anonymous')
+script(src='pheebz.js')
